@@ -25,8 +25,16 @@ namespace WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public string Post([FromBody]Model values)
         {
+            return "values received : " + values.Key;
+        }
+
+        [HttpPost]
+        [Route("Send")]
+        public string Send([FromBody] Model values)
+        {
+            return "values received by send : " + values.Key;
         }
 
         // PUT api/values/5
