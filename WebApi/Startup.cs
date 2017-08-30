@@ -28,7 +28,7 @@ namespace WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("*").AllowAnyHeader());
+                options.AddPolicy("AllowSpecificOrigin", builder => builder.AllowAnyHeader().AllowAnyOrigin());
             });
 
             services.AddMvc();
