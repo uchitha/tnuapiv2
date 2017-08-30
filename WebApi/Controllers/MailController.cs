@@ -25,11 +25,13 @@ namespace WebApi.Controllers
         }
 
         [Route("KidsCodeRegistration")]
-        public async Task<IActionResult> KidsCodeRegistrationEmail(KidsCodeRegistration model)
+        public async Task<IActionResult> KidsCodeRegistrationEmail([FromBody]KidsCodeRegistration model)
         {
-            Trace.TraceInformation($"Sending Kids Code Registration email to : {model.Email}");
+            Debug.WriteLine($"Sending Kids Code Registration email to : {model.Email}");
             var success = await _emailService.SendSingleEmail(model.Email, "Aus Kids Code - Registration", "foo-bar");
+            Debug.Flush();
             return Ok(new { success });
+
         }
     }
 }

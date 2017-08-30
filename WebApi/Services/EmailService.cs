@@ -34,7 +34,7 @@ namespace WebApi.Services
 
             Trace.TraceInformation($"Response received from sendgrid : {response.StatusCode}");
 
-            return (response.StatusCode == HttpStatusCode.OK);
+            return (response.StatusCode == HttpStatusCode.Accepted);
         }
     }
 }
