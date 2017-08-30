@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using WebApi.Models;
 using WebApi.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebApi.Controllers
 {
@@ -25,6 +26,7 @@ namespace WebApi.Controllers
         }
 
         [Route("KidsCodeRegistration")]
+        [EnableCors("AllowSpecificOrigin")]
         public async Task<IActionResult> KidsCodeRegistrationEmail([FromBody]KidsCodeRegistration model)
         {
             Debug.WriteLine($"Sending Kids Code Registration email to : {model.Email}");

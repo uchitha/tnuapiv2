@@ -26,6 +26,11 @@ namespace WebApi
         {
             services.AddTransient<IEmailService, EmailService>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://example.com"));
+            });
+
             services.AddMvc();
         }
 
@@ -36,6 +41,8 @@ namespace WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseMvc();
         }
