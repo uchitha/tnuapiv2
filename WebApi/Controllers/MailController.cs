@@ -26,8 +26,8 @@ namespace WebApi.Controllers
         [Route("KidsCodeRegistration")]
         public async Task<IActionResult> KidsCodeRegistrationEmail(KidsCodeRegistration model)
         {
-            await _emailService.SendSingleEmail(model.Email, "Aus Kids Code - Registration", "foo-bar");
-            return Ok(new {status = _configuration.GetValue<string>("Emails:KidsCodeAdmin") });
+            var success = await _emailService.SendSingleEmail(model.Email, "Aus Kids Code - Registration", "foo-bar");
+            return Ok(new { success });
         }
     }
 }
