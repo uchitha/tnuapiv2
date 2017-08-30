@@ -26,7 +26,6 @@ namespace WebApi.Controllers
         }
 
         [Route("KidsCodeRegistration")]
-        [EnableCors("AllowSpecificOrigin")]
         public async Task<IActionResult> KidsCodeRegistrationEmail([FromBody]KidsCodeRegistration model)
         {
             Debug.WriteLine($"Sending Kids Code Registration email to : {model.Email}");
