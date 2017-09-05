@@ -26,15 +26,27 @@ namespace WebApi.Services
         {
 
             var fromEmail = new EmailAddress(from);
-            var toEmail = new EmailAddress(_configuration.GetValue<string>("Emails:KidsCodeAdmin"), "Kids Code Admin");
+            var adminEmails = _configuration.GetValue<string>("Emails:KidsCodeAdmin").Split(',');
 
-            var msg = MailHelper.CreateSingleEmail(fromEmail, toEmail, subject, plainTextContent, htmlContent);
+            int sentCount = 0;
+            foreach (var email in adminEmails)
+            {
+                var toEmail = new EmailAddress(email, "Kids Code Admin");
 
-            var response = await _sendgridClient.SendEmailAsync(msg);
+                var msg = MailHelper.CreateSingleEmail(fromEmail, toEmail, subject, plainTextContent, htmlContent);
 
-            Trace.TraceInformation($"Response received from sendgrid : {response.StatusCode}");
+                var response = await _sendgridClient.SendEmailAsync(msg);
 
-            return (response.StatusCode == HttpStatusCode.Accepted);
+                Trace.TraceInformation($"Response received from sendgrid : {response.StatusCode}");
+
+                if (response.StatusCode == HttpStatusCode.Accepted)
+                {
+                    sentCount++;
+                }
+            }
+
+            return sentCount == adminEmails.Length;
+
         }
     }
 }
