@@ -28,7 +28,7 @@ namespace WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials());
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyHeader().AllowAnyOrigin());
             });
 
             services.AddMvc();
