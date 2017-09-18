@@ -28,7 +28,7 @@ namespace WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyHeader().AllowAnyOrigin());
+                options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://kidscode.azurewebsites.net"));
             });
 
             services.AddMvc();
