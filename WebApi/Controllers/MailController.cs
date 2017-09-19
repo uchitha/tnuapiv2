@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> KidsCodeRegistrationEmail([FromBody]KidsCodeRegistration model)
         {
             Debug.WriteLine($"Sending Kids Code Registration email to : {model.Email}");
-            var success = await _emailService.SendSingleEmail(model.Email, "Aus Kids Code - Registration", JsonConvert.SerializeObject(model) );
+            var success = await _emailService.SendSingleEmail("Aus Kids Code - Registration", JsonConvert.SerializeObject(model) );
             Debug.Flush();
             if (!success) return StatusCode((int)HttpStatusCode.InternalServerError, "Failed to send the notification. Can you please try again?");
             return Ok();

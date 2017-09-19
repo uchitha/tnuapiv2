@@ -8,6 +8,6 @@ namespace WebApi.Services
 {
     public interface IEmailService
     {
-        Task<bool> SendSingleEmail(string from, string subject, string plainTextContent, string htmlContent = null);
+        Task<bool> SendSingleEmail(string subject, string plainTextContent, string htmlContent = null);
     }
 }
