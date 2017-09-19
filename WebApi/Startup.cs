@@ -14,9 +14,12 @@ namespace WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment Environment;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -26,9 +29,12 @@ namespace WebApi
         {
             services.AddTransient<IEmailService, EmailService>();
 
+            var origins = GetAllowedOrigins();
+
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy("CorsPolicy",builder => builder.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy("LocalDevCorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
             services.AddMvc();
@@ -37,16 +43,23 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors("CorsPolicy");
-
             if (env.IsDevelopment())
             {
+                app.UseCors("LocalDevCorsPolicy");
                 app.UseDeveloperExceptionPage();
             }
-
-          
+            else
+            {
+                app.UseCors("CorsPolicy");
+            }
 
             app.UseMvc();
+        }
+
+        private string[] GetAllowedOrigins()
+        {
+            var originArray = Configuration.GetSection("AllowedOrigins");
+            return originArray.GetChildren().Select(c => c.Value).ToArray();
         }
     }
 }
