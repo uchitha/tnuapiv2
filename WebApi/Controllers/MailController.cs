@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             var success = await _emailService.SendSingleEmail("Aus Kids Code - Registration", JsonConvert.SerializeObject(model) );
             Debug.Flush();
             if (!success) return StatusCode((int)HttpStatusCode.InternalServerError, "Failed to send the notification. Can you please try again?");
-            return Ok();
+            return Ok( new { status = success });
         }
     }
 }
