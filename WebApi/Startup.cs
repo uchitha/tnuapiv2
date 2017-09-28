@@ -33,7 +33,7 @@ namespace WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy("CorsPolicy",builder => builder.WithOrigins("https://aussiekidscode.com.au").AllowAnyHeader().AllowAnyMethod());
                 options.AddPolicy("LocalDevCorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
