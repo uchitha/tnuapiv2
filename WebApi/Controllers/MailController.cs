@@ -37,5 +37,13 @@ namespace WebApi.Controllers
             if (!success) return StatusCode((int)HttpStatusCode.InternalServerError, "Failed to send the notification. Can you please try again?");
             return Ok( new { status = success });
         }
+
+        [HttpPost]
+        [Route("test")]
+        public IActionResult Test()
+        {
+            Debug.WriteLine($"Invoked test method");
+            return Ok();
+        }
     }
 }
