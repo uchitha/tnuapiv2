@@ -31,9 +31,8 @@ namespace WebApi.Controllers
         [Route("KidsCodeRegistration")]
         public async Task<IActionResult> KidsCodeRegistrationEmail([FromBody]KidsCodeRegistration model)
         {
-            Debug.WriteLine($"Sending Kids Code Registration email to : {model.Email}");
+            Trace.WriteLine("Registration info : ", JsonConvert.SerializeObject(model));
             var success = await _emailService.SendSingleEmail("kidscode@tnuit.com.au","Aus Kids Code - Registration", JsonConvert.SerializeObject(model) );
-            Debug.Flush();
             if (!success) return StatusCode((int)HttpStatusCode.InternalServerError, "Failed to send the notification. Can you please try again?");
             return Ok( new { status = success });
         }
