@@ -37,6 +37,32 @@ namespace WebApi.Controllers
             return Ok( new { status = success });
         }
 
+        [HttpGet]
+        [Route("Registration")]
+        public async Task<IActionResult> RegistrationEmail([FromQuery]string name,
+            [FromQuery]int age,
+            [FromQuery]string parentsName,
+            [FromQuery]string email,
+            [FromQuery]string phone,
+            [FromQuery]string course,
+            [FromQuery]string comment)
+        {
+            var model = new KidsCodeRegistration
+            {
+                Name = name,
+                Age = age,
+                ParentsName = parentsName,
+                Email = email,
+                Phone = phone,
+                Course = (KidsCodeCourse)Enum.Parse(typeof(KidsCodeCourse), course, true),
+                Comment = comment
+            };
+            Trace.WriteLine("Registration info : ", JsonConvert.SerializeObject(model));
+            var success = await _emailService.SendSingleEmail("kidscode@tnuit.com.au", "Aus Kids Code - Registration", JsonConvert.SerializeObject(model));
+            if (!success) return StatusCode((int)HttpStatusCode.InternalServerError, "Failed to send the notification. Can you please try again?");
+            return Ok(new { status = success });
+        }
+
         [HttpPost]
         [Route("test")]
         public IActionResult Test()
